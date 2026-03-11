@@ -1,0 +1,70 @@
+---
+const { frontmatter } = Astro.props;
+---
+
+<style>
+  .markdown-post-wrapper {
+    width: 100%;
+    max-width: 800px;
+    padding: 1rem;
+    margin: 0 auto;
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: 1.2rem;
+  }
+
+  .markdown-post-tags {
+    margin: 1rem 0 2rem 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: baseline;
+    gap: 0.75rem;
+  }
+
+  .markdown-post-tags p {
+    margin: 0;
+  }
+
+  .markdown-post-tags ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .markdown-post-tags li {
+    padding: 0.125rem 0.625rem 0.25rem 0.625rem;
+    background-color: #eee;
+    border-radius: 1rem;
+  }
+</style>
+
+<meta charset="utf-8" />
+<div class="markdown-post-wrapper">
+  <h1>{frontmatter.title}</h1>
+  <p>Published on: {frontmatter.pubDate.toString().slice(0, 10)}</p>
+  <p><em>{frontmatter.description}</em></p>
+  <p>Written by {frontmatter.author}</p>
+  <div class="markdown-post-tags">
+    <p>Tags:</p>
+    <ul>
+      {
+        frontmatter.tags.map((tag: string) => {
+          return <li>{tag}</li>;
+        })
+      }
+    </ul>
+  </div>
+  <img src={frontmatter.image.url} alt={frontmatter.image.alt} />
+  <slot />
+</div>
