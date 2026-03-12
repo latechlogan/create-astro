@@ -16,36 +16,22 @@ const { frontmatter } = Astro.props;
     border-radius: 1.2rem;
   }
 
-  .markdown-post-tags {
-    margin: 1rem 0 2rem 0;
+  a {
+    color: #00539f;
+  }
+
+  .tags {
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: baseline;
-    gap: 0.75rem;
   }
 
-  .markdown-post-tags p {
-    margin: 0;
-  }
-
-  .markdown-post-tags ul {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 0.5rem;
-  }
-
-  .markdown-post-tags li {
-    padding: 0.125rem 0.625rem 0.25rem 0.625rem;
-    background-color: hsla(0, 0%, 0%, 0.08);
-    border-radius: 1rem;
+  .tag {
+    margin: 0.25rem 0.25rem 2rem 0.25rem;
+    border: dotted 1px #a1a1a1;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 1.15rem;
+    background-color: #f8fcfd;
   }
 </style>
 
@@ -54,15 +40,14 @@ const { frontmatter } = Astro.props;
     <p>Published on: {frontmatter.pubDate.toString().slice(0, 10)}</p>
     <p><em>{frontmatter.description}</em></p>
     <p>Written by {frontmatter.author}</p>
-    <div class="markdown-post-tags">
-      <p>Tags:</p>
-      <ul>
-        {
-          frontmatter.tags.map((tag: string) => {
-            return <li>{tag}</li>;
-          })
-        }
-      </ul>
+    <div class="tags">
+      {
+        frontmatter.tags.map((tag: string) => (
+          <p class="tag">
+            <a href={`/tags/${tag}`}>{tag}</a>
+          </p>
+        ))
+      }
     </div>
     <img src={frontmatter.image.url} alt={frontmatter.image.alt} />
     <slot />
